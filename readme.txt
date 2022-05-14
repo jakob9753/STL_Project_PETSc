@@ -10,4 +10,4 @@ Explanation:	-a offshore_petsc takes the file offshore_petsc as the matrix A
 		-ksp_monitor prints the relative residual norms to the console
 
 2) in terminal run: bash create_plot
-Explanation: This creates the file residual_norms.png with gnu plot
+Explanation: This creates the file residual_norms.png with gnu plot. 
