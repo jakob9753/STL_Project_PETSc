@@ -11,3 +11,5 @@ Explanation:	-a offshore_petsc takes the file offshore_petsc as the matrix A
 
 2) in terminal run: bash create_plot
 Explanation: This creates the file residual_norms.png with gnu plot. 
+
+-mpirun

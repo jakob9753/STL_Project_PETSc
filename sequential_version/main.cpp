@@ -11,7 +11,7 @@ static char help[] = "Reads a PETSc matrix and vector from a file.\n\
      petscis.h     - index sets            petscviewer.h - viewers
 */
 //#include <petscmat.h>
-#include "petscksp.h" //includes vec,mat,dm,pc also enables ksp
+#include <petscksp.h> //includes vec,mat,dm,pc also enables ksp
 
 int main(int argc,char **args)
 {

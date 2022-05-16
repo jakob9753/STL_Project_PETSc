@@ -1,0 +1,10 @@
+#!/bin/bash
+
+gnuplot -persist <<-EOFMarker
+	set term png 
+	set grid 
+	set title "Relative Residual Norm" 
+	set logscale y 10
+	set output "residual_norms.png" 
+	plot "convergence.txt" using 1:5 with linespoints
+EOFMarker
