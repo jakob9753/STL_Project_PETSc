@@ -20,8 +20,8 @@ int main(int argc,char **args)
     PetscViewer view_in_A, view_in_b;          /* viewer */
     char file_A[PETSC_MAX_PATH_LEN];           /* input file name */
     char file_b[PETSC_MAX_PATH_LEN];
-    char filepath_A[PETSC_MAX_PATH_LEN] = "vectors_and_matrices/";     
-    char filepath_b[PETSC_MAX_PATH_LEN] = "vectors_and_matrices/";     
+    char filepath_A[PETSC_MAX_PATH_LEN] = "../vectors_and_matrices/";     
+    char filepath_b[PETSC_MAX_PATH_LEN] = "../vectors_and_matrices/";     
     PetscBool flg_A;
     PetscBool flg_b;
     KSP ksp;
