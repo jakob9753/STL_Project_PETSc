@@ -29,7 +29,7 @@ int main(int argc,char **args)
     MatType type_A = MATSEQAIJ; // // MATSEQAIJ,MATAIJ,MATMPIAIJ
     VecType type_b = VECSEQ; // VECMPI,VECSEQ,VECSTANDARD
     KSPType type_ksp = KSPCG; // {KSPRICHARDSON, KSPCG, KSPGCR, KSPGMRES, ...}
-    PCType type_pc=PCILU; // {PCJACOBI,PCBJACOBI,PCILU,PCICC...}
+    PCType type_pc=PCJACOBI; // {PCJACOBI,PCBJACOBI,PCILU,PCICC...} PCILU does not work for MPI
     PetscInt m,n;
     //PetscDraw image;
 
