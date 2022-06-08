@@ -43,9 +43,9 @@ int main(int argc,char **args)
     PetscOptionsGetString(NULL,NULL,"-a",file_A,sizeof(file_A),&flg_A);
     PetscOptionsGetString(NULL,NULL,"-b",file_b,sizeof(file_b),&flg_b);
     // Error message if file is not passed with flag -a
-    flg_A,PETSC_COMM_WORLD,PETSC_ERR_USER,"Must indicate binary file with the -a option";
+    //flg_A,PETSC_COMM_WORLD,PETSC_ERR_USER,"Must indicate binary file with the -a option";
     // Error message if file is not passed with flag -b
-    flg_b,PETSC_COMM_WORLD,PETSC_ERR_USER,"Must indicate binary file with the -b option";
+    //flg_b,PETSC_COMM_WORLD,PETSC_ERR_USER,"Must indicate binary file with the -b option";
     
     strncat(filepath_A, file_A, PETSC_MAX_PATH_LEN);
     strncat(filepath_b, file_b, PETSC_MAX_PATH_LEN);
