@@ -26,8 +26,8 @@ int main(int argc,char **args)
     PetscBool flg_b;
     KSP ksp;
     PC pc;
-    MatType type_A = MATSEQAIJ; // // MATSEQAIJ,MATAIJ,MATMPIAIJ
-    VecType type_b = VECSEQ; // VECMPI,VECSEQ,VECSTANDARD
+    MatType type_A = MATMPIAIJ; // // MATSEQAIJ,MATAIJ,MATMPIAIJ
+    VecType type_b = VECMPI; // VECMPI,VECSEQ,VECSTANDARD
     KSPType type_ksp = KSPCG; // {KSPRICHARDSON, KSPCG, KSPGCR, KSPGMRES, ...}
     PCType type_pc=PCJACOBI; // {PCJACOBI,PCBJACOBI,PCILU,PCICC...} PCILU does not work for MPI
     PetscInt m,n;
