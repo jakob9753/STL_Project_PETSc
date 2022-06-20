@@ -21,7 +21,7 @@ PetscErrorCode solve_linear_system(Mat* A, Vec* b, Vec* x, char* matrix_name, Pe
 PetscErrorCode monitor(KSP,PetscInt,PetscReal,void* ptr);
 PetscErrorCode read_matrix_from_file(char* filepath_A, Mat* A);
 PetscErrorCode read_vector_from_file(char* filepath_b, Vec* b);
-PetscErrorCode create_random_vector(Vec* b, PetscInt size);
+PetscErrorCode create_random_vector(Vec* b, PetscInt size, PetscReal max, PetscReal min);
 
 PetscErrorCode read_matrix_from_file(char* filepath_A, Mat* A){
     PetscErrorCode ierr = 0;
@@ -51,7 +51,7 @@ PetscErrorCode read_vector_from_file(char* filepath_b, Vec* b){
     return ierr;
 }
 
-PetscErrorCode create_random_vector(Vec* b, PetscInt size){
+PetscErrorCode create_random_vector(Vec* b, PetscInt size, PetscReal max, PetscReal min){
     PetscErrorCode ierr = 0;
     
     PetscRandom rand;
@@ -59,7 +59,7 @@ PetscErrorCode create_random_vector(Vec* b, PetscInt size){
     ierr = VecSetType(*b,VECMPI);CHKERRQ(ierr);
     ierr = VecSetSizes(*b,PETSC_DECIDE,size);CHKERRQ(ierr);
     ierr = PetscRandomCreate(PETSC_COMM_WORLD, &rand);CHKERRQ(ierr);
-    
+    ierr = PetscRandomSetInterval(rand,min,max);CHKERRQ(ierr);
     ierr = VecSetRandom(*b,rand);CHKERRQ(ierr);
 
     ierr = PetscRandomDestroy(&rand);CHKERRQ(ierr);
@@ -113,8 +113,11 @@ PetscErrorCode solve_linear_system(Mat* A, Vec* b, Vec* x, char* matrix_name, Pe
         char filename[100];
         sprintf(filename, "rnorm_%s_%s_%s.txt", matrix_name, type_ksp, type_pc);
         prepare_file(type_ksp, type_pc, filename);
+        
         ierr = KSPMonitorSet(ksp, monitor, filename,NULL);CHKERRQ(ierr);    
     }
+
+
 
     //measure the times before and after
     auto t1 = std::chrono::high_resolution_clock::now();
@@ -176,7 +179,7 @@ int main(int argc,char **args)
     char filepath_b[PETSC_MAX_PATH_LEN] = "../vectors_and_matrices/";     
     PetscBool flg_A, flg_b, flg_runtime;
     Mat A;
-    Vec b,x;
+    Vec b,x, v_min, v_max;
     PetscMPIInt rank;
     std::chrono::duration<double, std::milli> runtime;
 
@@ -203,9 +206,26 @@ int main(int argc,char **args)
     }else{
         // if -b is not given, create a RHS vector with random values between 0 and 1
         PetscInt m,n;
+        PetscReal max, min;
         ierr = MatGetSize(A,&m,&n);CHKERRQ(ierr);
+
+        ierr = VecCreate(PETSC_COMM_WORLD, &v_max);CHKERRQ(ierr);
+        ierr = VecSetType(v_max,VECMPI);CHKERRQ(ierr);
+        ierr = VecSetSizes(v_max,PETSC_DECIDE,m);CHKERRQ(ierr);
+
+        ierr = VecCreate(PETSC_COMM_WORLD, &v_min);CHKERRQ(ierr);
+        ierr = VecSetType(v_min,VECMPI);CHKERRQ(ierr);
+        ierr = VecSetSizes(v_min,PETSC_DECIDE,m);CHKERRQ(ierr);
+
+
+        MatGetRowMax(A,v_max, NULL);
+        VecMax(v_max,NULL,&max);
+
+        MatGetRowMin(A,v_min, NULL);
+        VecMin(v_min,NULL,&min);
+
         //std::cout << m << " " << n << std::endl; 
-        ierr = create_random_vector(&b, n);
+        ierr = create_random_vector(&b, n, max, min);
     }
 
     // assign rank numbers to processes
