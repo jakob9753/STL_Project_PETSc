@@ -204,7 +204,7 @@ int main(int argc,char **args)
         // (optional flag) read RHS vector from file if the filename is given via flag -b 
         ierr = read_vector_from_file(filepath_b, &b);CHKERRQ(ierr);
     }else{
-        // if -b is not given, create a RHS vector with random values between 0 and 1
+        // if -b is not given, create a RHS vector with random values between min(A) and max(A)
         PetscInt m,n;
         PetscReal max, min;
         ierr = MatGetSize(A,&m,&n);CHKERRQ(ierr);
