@@ -1,0 +1,18 @@
+cg+gamg
+1 Average Runtime: 109902
+8 Average Runtime: 24763.2
+16 Average Runtime: 14432.2
+24 Average Runtime: 11083.7
+32 Average Runtime: 11570.7
+40 Average Runtime: 9800.72
+48 Average Runtime: 8519.68
+
+
+gmres+gamg
+1 Average Runtime: 110863
+8 Average Runtime: 24941
+16 Average Runtime: 14429.9
+24 Average Runtime: 11022.4
+32 Average Runtime: 11530.7
+40 Average Runtime: 9831.59
+48 Average Runtime: 8527.52

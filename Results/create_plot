@@ -1,0 +1,16 @@
+#!/bin/bash
+
+gnuplot -persist <<-EOFMarker
+	set term png 
+	set grid 
+	set title "Convergence of Residual Norm" 
+	set xlabel "number of iterations"
+	set ylabel " absolute residual norm"
+	set logscale y 10
+    #set logscale x 10
+    set key autotitle columnhead
+	set output "residual_norms.png" 
+	plot for [i=0:4] "rnorm_Bump_2911_petsc.txt" using 1:2 index i with lines lw 2
+    
+    #plot "rnorm_G3_circuit_petsc_gmres_gamg.txt" using 1:2 with lines lw 2, "rnorm_Long_Coup_dt0_petsc_gmres_gamg.txt" using 1:2 with lines lw 2
+EOFMarker
