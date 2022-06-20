@@ -24,7 +24,7 @@ By default the program monitors the residual norm in each iteration. This value 
 
 By default the program also prints the termination reason to the console. This is an integer number, a description of the meanings can be found here: https://petsc.org/main/docs/manualpages/KSP/KSPConvergedReason/
 
-If the flag -time is given, then the program does not do any monitoring (and also does not print the termination reason), but just measures the runtime of the solver and prints it to the console. (In Milliseconds) 
+If the flag -time is given, then the program does not do any monitoring (and also does not print the termination reason), but measures the runtime of the solver and prints it to the console. (In Milliseconds) The runtime is measured as average over 5 runs.
 
 It is also important to set the tolerances of the ksp solver. By default they are rtol=1e-5, atol=1e-50, dtol=1e5, and maxits=1e4.
 You can change the tolerances with -ksp_rtol <value>,  -ksp_atol <value>,  -ksp_divtol <value> and -ksp_max_it <value>.

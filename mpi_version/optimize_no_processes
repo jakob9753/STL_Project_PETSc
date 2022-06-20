@@ -1,0 +1,27 @@
+# this program runs the main. file with given number of processes and stores the results in a .txt file. For the runtime analyses the main program was changed to calculate the average runtime over 5 runs.
+
+
+#!/bin/bash
+
+rm runtimes.txt
+
+for i in {1..4}
+do
+	echo -n "$i "
+	echo -n "$i " >> runtimes.txt
+	TIME=$(mpirun -n $i ./main -a offshore_petsc -b offshore_b_petsc -ksp_type gmres -pc_type gamg -time)
+	echo "$TIME" >> runtimes.txt
+done
+
+gnuplot -persist <<-EOFMarker
+	set term png 
+	set grid 
+	set title "Average Runtimes for different Number of Processes" 
+	set xlabel "number of processes"
+	set ylabel "runtime in ms"
+	set xtics (1,2,3,4)
+    set style line 1 lc rgb '#0060ad' lt 1 lw 2 pt 7 pi -1 ps 1.5
+    set pointintervalbox 3
+	set output "runtimes.png" 
+	plot "runtimes.txt" using 1:4 with linespoints ls 1
+EOFMarker
